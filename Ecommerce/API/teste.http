@@ -1,8 +1,15 @@
 ### Requisição para a raiz
 GET http://localhost:5011/
 
-### Requisição para a funcionalidade com GET
-GET http://localhost:5011/funcionalidade
+### Listar todos os produtos
+GET http://localhost:5011/api/produto/listar
 
-### Requisição para a funcionalidade com POST
-POST http://localhost:5011/funcionalidade
+### Cadastrar o produto
+POST http://localhost:5011/api/produto/cadastrar
+Content-Type: application/json
+
+{
+    "nome" : "Mouse",
+    "quantidade" : 123,
+    "preco" : 85.5
+}
