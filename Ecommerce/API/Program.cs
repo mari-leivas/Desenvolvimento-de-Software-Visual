@@ -19,6 +19,7 @@ List<Produto> produtos = new List<Produto>
 //Requisições
 // - Endereço/URL
 // - Método HTTP
+// - Dados: rota (URL) e corpo (opcional)
 
 //Respostas
 // - Código de status HTTP
@@ -30,8 +31,22 @@ List<Produto> produtos = new List<Produto>
 // PUT: Atualizar completamente um recurso existente no servidor.
 // PATCH: Atualizar parcialmente um recurso existente.
 // DELETE: Remover um recurso do servidor.
+
+//Códigos de Status HTTP
+// 2xx (Sucesso)
+// 200 OK: A solicitação foi bem-sucedida e o servidor retornou a resposta esperada.
+// 201 Created: A solicitação foi bem-sucedida e um novo recurso foi criado como resultado (geralmente usado em POST).
+// 204 No Content: A solicitação foi bem-sucedida, mas não há conteúdo para retornar (geralmente em respostas de DELETE ou PUT sem necessidade de retornar dados).
+// 4xx (Erro do Cliente)
+// 400 Bad Request: A solicitação é inválida ou malformada; o servidor não conseguiu entendê-la.
+// 401 Unauthorized: O cliente não tem permissão para acessar o recurso, geralmente porque precisa autenticar-se.
+// 404 Not Found: O recurso solicitado não foi encontrado no servidor.
+// 409 Conflict: A solicitação não pôde ser processada devido a um conflito, geralmente relacionado a dados (como tentar criar um recurso com o mesmo identificador que outro já existe).
+
+//Raiz da aplicação
 app.MapGet("/", () => "API de Produtos");
 
+//Listar produtos
 app.MapGet("/api/produto/listar", () =>
 {
     //Validar se existe alguma coisa dentro da lista
@@ -42,6 +57,7 @@ app.MapGet("/api/produto/listar", () =>
     return Results.BadRequest("Lista vazia");
 });
 
+//Cadastrar produto
 app.MapPost("/api/produto/cadastrar", ([FromBody] Produto produto) =>
 {
     foreach (Produto produtoCadastrado in produtos)
@@ -55,6 +71,7 @@ app.MapPost("/api/produto/cadastrar", ([FromBody] Produto produto) =>
     return Results.Created("", produto);
 });
 
+//Buscar produto pelo nome
 app.MapGet("/api/produto/buscar/{nome}", ([FromRoute] string nome) =>
 {
     //Expressão lambda
@@ -64,6 +81,33 @@ app.MapGet("/api/produto/buscar/{nome}", ([FromRoute] string nome) =>
     {
         return Results.NotFound("Produto não encontrado");
     }
+    return Results.Ok(resultado);
+});
+
+//Remover produto pelo id
+app.MapDelete("/api/produto/remover/{id}", ([FromRoute] string id) =>
+{
+    Produto? resultado = produtos.FirstOrDefault(x => x.Id == id);
+    if (resultado == null)
+    {
+        return Results.NotFound("Produto não encontrado");
+    }
+    produtos.Remove(resultado);
+    return Results.Ok(resultado);
+});
+
+//Alterar produto pelo id
+app.MapPatch("/api/produto/alterar/{id}", ([FromRoute] string id,
+    [FromBody] Produto produtoAlterado) =>
+{   
+    Produto? resultado = produtos.FirstOrDefault(x => x.Id == id);
+    if (resultado == null)
+    {
+        return Results.NotFound("Produto não encontrado");
+    }
+    resultado.Nome = produtoAlterado.Nome;
+    resultado.Quantidade = produtoAlterado.Quantidade;
+    resultado.Preco = produtoAlterado.Preco;
     return Results.Ok(resultado);
 });
 

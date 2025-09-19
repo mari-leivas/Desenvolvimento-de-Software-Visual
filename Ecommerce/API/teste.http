@@ -5,14 +5,27 @@ GET http://localhost:5011/
 GET http://localhost:5011/api/produto/listar
 
 ### Buscar produto por nome
-GET http://localhost:5011/api/produto/buscar
+GET http://localhost:5011/api/produto/buscar/Notebook
 
 ### Cadastrar o produto
 POST http://localhost:5011/api/produto/cadastrar
 Content-Type: application/json
 
 {
-    "nome" : "Notebook",
+    "nome" : "Mouse",
+    "quantidade" : 123,
+    "preco" : 85.5
+}
+
+### Remover produto por id
+DELETE http://localhost:5011/api/produto/remover/
+
+### Alterar produto por id
+PATCH http://localhost:5011/api/produto/alterar/138a9c8e-e236-45e4-be7b-1003f01e8c01
+Content-Type: application/json
+
+{
+    "nome" : "Mouse",
     "quantidade" : 123,
     "preco" : 85.5
 }
