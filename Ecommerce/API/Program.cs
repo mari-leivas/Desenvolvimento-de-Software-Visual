@@ -1,7 +1,7 @@
 using API.Models;
 using Microsoft.AspNetCore.Mvc;
 
-Console.Clear();
+// Console.Clear();
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 
@@ -112,3 +112,4 @@ app.MapPatch("/api/produto/alterar/{id}", ([FromRoute] string id,
 });
 
 app.Run();
+

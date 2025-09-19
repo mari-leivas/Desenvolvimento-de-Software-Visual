@@ -21,11 +21,11 @@ Content-Type: application/json
 DELETE http://localhost:5011/api/produto/remover/
 
 ### Alterar produto por id
-PATCH http://localhost:5011/api/produto/alterar/138a9c8e-e236-45e4-be7b-1003f01e8c01
+PATCH http://localhost:5011/api/produto/alterar/c0991c2d-7e6d-4103-a2bc-972caa69128e
 Content-Type: application/json
 
 {
-    "nome" : "Mouse",
+    "nome" : "Mouse ALTERADO",
     "quantidade" : 123,
     "preco" : 85.5
 }
