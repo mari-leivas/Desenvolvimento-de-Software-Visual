@@ -1,8 +1,12 @@
 using API.Models;
 using Microsoft.AspNetCore.Mvc;
 
-// Console.Clear();
+Console.Clear();
 var builder = WebApplication.CreateBuilder(args);
+
+//Adicionar o serviço de banco de dados na aplicação
+builder.Services.AddDbContext<AppDataContext>();
+
 var app = builder.Build();
 
 //Lista com produtos fixos
@@ -47,36 +51,38 @@ List<Produto> produtos = new List<Produto>
 app.MapGet("/", () => "API de Produtos");
 
 //Listar produtos
-app.MapGet("/api/produto/listar", () =>
+app.MapGet("/api/produto/listar", ([FromServices] AppDataContext ctx) =>
 {
     //Validar se existe alguma coisa dentro da lista
-    if (produtos.Count > 0)
+    if (ctx.Produtos.Any())
     {
-        return Results.Ok(produtos);
+        return Results.Ok(ctx.Produtos.ToList());
     }
     return Results.BadRequest("Lista vazia");
 });
 
 //Cadastrar produto
-app.MapPost("/api/produto/cadastrar", ([FromBody] Produto produto) =>
+app.MapPost("/api/produto/cadastrar", ([FromBody] Produto produto,
+    [FromServices] AppDataContext ctx) =>
 {
-    foreach (Produto produtoCadastrado in produtos)
+    Produto? resultado =
+        ctx.Produtos.FirstOrDefault(x => x.Nome == produto.Nome);
+    if (resultado is not null)
     {
-        if (produtoCadastrado.Nome == produto.Nome)
-        {
-            return Results.Conflict("Produto já cadastrado!");
-        }
+        return Results.Conflict("Produto já existente!");
     }
-    produtos.Add(produto);
+    ctx.Produtos.Add(produto);
+    ctx.SaveChanges();
     return Results.Created("", produto);
 });
 
-//Buscar produto pelo nome
-app.MapGet("/api/produto/buscar/{nome}", ([FromRoute] string nome) =>
+//Buscar produto pelo id
+app.MapGet("/api/produto/buscar/{id}", ([FromRoute] string id,
+    [FromServices] AppDataContext ctx) =>
 {
     //Expressão lambda
     // Produto produto = produtos.FirstOrDefault(x => x.Nome.Contains(nome));
-    Produto? resultado = produtos.FirstOrDefault(x => x.Nome == nome);
+    Produto? resultado = ctx.Produtos.Find(id);
     if (resultado == null)
     {
         return Results.NotFound("Produto não encontrado");
@@ -112,4 +118,7 @@ app.MapPatch("/api/produto/alterar/{id}", ([FromRoute] string id,
 });
 
 app.Run();
+
+
+
 

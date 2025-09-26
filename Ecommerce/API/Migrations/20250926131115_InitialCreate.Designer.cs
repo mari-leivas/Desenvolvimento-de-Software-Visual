@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(AppDataContext))]
-    [Migration("20250919142340_InitialCreate")]
+    [Migration("20250926131115_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -26,6 +26,10 @@ namespace API.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CriadoEm")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Descricao")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Nome")
