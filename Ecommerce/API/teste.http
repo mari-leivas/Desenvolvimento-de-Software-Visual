@@ -1,0 +1,32 @@
+### Requisição para a raiz
+GET http://localhost:5011/
+
+### Listar todos os produtos
+GET http://localhost:5011/api/produto/listar
+
+### Buscar produto por id
+GET http://localhost:5011/api/produto/buscar/7e2bfd5a-5396-4b04-bc06-ce7b1030e9d2
+
+### Cadastrar o produto
+POST http://localhost:5011/api/produto/cadastrar
+Content-Type: application/json
+
+{
+    "nome" : "Monitor",
+    "descricao" : "Eletrônico",
+    "quantidade" : 123,
+    "preco" : 85.5
+}
+
+### Remover produto por id
+DELETE http://localhost:5011/api/produto/remover/7e2bfd5a-5396-4b04-bc06-ce7b1030e9d2
+
+### Alterar produto por id
+PATCH http://localhost:5011/api/produto/alterar/d997041f-c5b7-402b-be27-d338546981b0
+Content-Type: application/json
+
+{
+    "nome" : "Mouse ALTERADO",
+    "quantidade" : 123,
+    "preco" : 85.5
+}
