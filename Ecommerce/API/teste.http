@@ -5,24 +5,24 @@ GET http://localhost:5011/
 GET http://localhost:5011/api/produto/listar
 
 ### Buscar produto por id
-GET http://localhost:5011/api/produto/buscar/6d08ef5c-7325-4f01-aed2-6a3c80153554
+GET http://localhost:5011/api/produto/buscar/7e2bfd5a-5396-4b04-bc06-ce7b1030e9d2
 
 ### Cadastrar o produto
 POST http://localhost:5011/api/produto/cadastrar
 Content-Type: application/json
 
 {
-    "nome" : "Teclado",
+    "nome" : "Monitor",
     "descricao" : "Eletrônico",
     "quantidade" : 123,
     "preco" : 85.5
 }
 
 ### Remover produto por id
-DELETE http://localhost:5011/api/produto/remover/
+DELETE http://localhost:5011/api/produto/remover/7e2bfd5a-5396-4b04-bc06-ce7b1030e9d2
 
 ### Alterar produto por id
-PATCH http://localhost:5011/api/produto/alterar/c0991c2d-7e6d-4103-a2bc-972caa69128e
+PATCH http://localhost:5011/api/produto/alterar/d997041f-c5b7-402b-be27-d338546981b0
 Content-Type: application/json
 
 {
