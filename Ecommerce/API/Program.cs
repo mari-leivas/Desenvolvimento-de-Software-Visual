@@ -61,13 +61,6 @@ app.MapGet("/", () => "API de Produtos");
 //Listar produtos
 app.MapGet("/api/produto/listar", ([FromServices] AppDataContext ctx) =>
 {
-    List<Produto> produtos = ctx.Produtos.ToList();
-    double total = 0;
-    foreach(Produto produto in produtos)
-    {
-        total = total + produto.Preco;
-    }
-
     //Validar se existe alguma coisa dentro da lista    
     if (ctx.Produtos.Any())
     {
