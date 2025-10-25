@@ -1,4 +1,3 @@
-import React from 'react';
 import ListarProdutos from './components/pages/produto/ListarProdutos';
 import CadastrarProduto from './components/pages/produto/CadastrarProduto';
 
